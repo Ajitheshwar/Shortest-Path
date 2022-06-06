@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div style="text-align: center; margin : 5px 0px">
+        <form name="form1" id="form1">
+            <div style="display : inline-block">
+                <div class="input-group">
+                    <input type="number" name="rows" id="rows" required>
+                    <label class="input-label" for="rows"> Rows </label>
+                </div>
+            </div>
+            <div style="display : inline-block">
+                <div class="input-group">
+                    <input type="number" name="cols" id="cols" required>
+                    <label class="input-label" for="cols"> Columns </label>
+                </div>
+            </div>
+            <button type="submit">Submit</button>
+            
+        </form>
+    </div>
+    <div id="displayGrid"></div>
+    <button id="btn" class="glow-on-hover" onclick="findRoute()">START</button>
+    <script src="game.js"></script>
+</body>
+</html>

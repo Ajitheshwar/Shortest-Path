@@ -1,0 +1,197 @@
+body{
+    font-family : Arial, Helvetica, sans-serif
+}
+
+
+table{
+    margin : 0 auto;
+}
+
+td{
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    font: 10px
+}
+
+
+.bg-white{
+    background-color: white;
+}
+.bg-white:hover{
+    background-color: #00000040;
+}
+
+
+
+.bg-dark{
+    background-color: black;
+}
+
+.bg-secondary{
+    background-color: #00000010
+}
+
+.bg-route{
+    background-color: rgb(26, 211, 26);
+}
+
+.border-td{
+    border : 0px solid black;
+    padding-right: 4px;
+}
+
+.input-group{
+    position: relative;
+    vertical-align: middle;
+}
+
+input[type = number]{
+    outline : 1px solid #bdbcbc;
+    padding : 8px;
+    margin : 5px 15px 5px 5px;
+    border-radius: 10px;
+    border : none;
+    width : 70px;
+    cursor : auto;
+}
+
+.input-label{
+    cursor: auto;
+    position: absolute;
+    top : 0;
+    left: 0;
+    transform: translate(9px, 7px);
+    transition: transform .25s;
+    font-size : 14px;
+    padding : 5px;
+    color : rgb(150, 145, 145)
+}
+
+input[type=number]:focus, input[type=number]:valid{
+    padding: 20px 8px 8px 8px;
+    outline : 2px solid #bdbcbc
+}
+
+input[type = number]:focus + .input-label, input[type=number]:valid + .input-label{
+    transform: translate(10px, -8px) scale(.9);
+    background-color: #fff;
+    color: black;
+}
+
+input[type=number]:is(:focus, :valid){
+    outline-color: #d1c5fc;
+}
+
+button[type=submit]{
+    display: inline-block;
+    text-decoration: none;
+    padding : 8px 10px;
+    border : 1px solid #bdbcbc;
+    border-radius : 8px;
+    margin : 16px 0px;
+}
+
+button[type=submit]:hover{
+    border: 1px solid rgba(81, 203, 238, 1);
+    animation : pulsate 1s ease-in-out infinite;
+    cursor: pointer;
+}
+
+@keyframes pulsate {
+    0%{
+        box-shadow: 0 0 8px rgb(142, 200, 216), 0 0 16px rgba(69, 199, 235, 0.651);
+    }
+}
+
+.glow-on-hover {
+    display: none;
+    margin : 10px auto;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    border-radius: 10px;
+    padding : 12px 40px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -4px;
+    left:-4px;
+    background-size: 400%;
+    filter : blur(1px);
+    z-index: -1;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    animation: glowing 10s linear infinite;
+    opacity: .6;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+.textAnimate {
+    position: absolute;
+    bottom: 50%;
+    left: 40%;
+    opacity: 0; 
+    background-color: black;
+    padding : 5px 10px;
+    color : white;
+    border-radius: 10px;
+    box-shadow: 0 10px 14px 0 rgba(0, 0, 0, 0.4), 0 16px 24px 0 rgba(0, 0, 0, 0.3);
+
+    animation-name: opacityOn;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+@keyframes opacityOn {
+    0% {
+        opacity: 0;
+    }
+    30%{
+        opacity : 1;
+    }
+    60%{
+        opacity : 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
