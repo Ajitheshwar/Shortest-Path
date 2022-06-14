@@ -1,25 +1,25 @@
-window.m = 0, window.n = 0
-window.si = -1, window.sj = -1
-window.ei = -1, window.ej = -1
-window.g;
+m = 0, n = 0
+si = -1, sj = -1
+ei = -1, ej = -1
+g=[];
 
 function getRowsCols(event){
     document.getElementById("btn").style.display="block"
     let h = document.getElementById("textAnimate")
     if(h!==null)
         h.remove()
-    window.m = Number(document.getElementById("rows").value);
-    window.n = Number(document.getElementById("cols").value);
-    window.si=window.sj=window.ei=window.ej=-1
+    m = Number(document.getElementById("rows").value);
+    n = Number(document.getElementById("cols").value);
+    si=sj=ei=ej=-1
 
     let grid = document.getElementById("grid");
     if(grid!==null)
         grid.remove()
     
-    let a = window.m*window.n;
-    window.g = new Array(window.m+1)
-    for(let i =0;i<window.m+1;i++){
-        window.g[i] = new Array(window.n+1).fill(a);
+    let a = m*n;
+    g = new Array(m+1)
+    for(let i =0;i<m+1;i++){
+        g[i] = new Array(n+1).fill(a);
     }
 
     event.preventDefault()
@@ -36,7 +36,7 @@ function getRowsCols(event){
     setTimeout(()=>{textAnimate.remove()},5100)
     let textAnimate1,textAnimate3
     
-    let x = Math.floor(Math.min(screen.width/(window.n+1),(screen.height-120)/(window.m+1)));
+    let x = Math.floor(Math.min(screen.width/(n+1),(screen.height-120)/(m+1)));
     if(x<20){
         x=20;
     }
@@ -45,11 +45,11 @@ function getRowsCols(event){
     }
     x = x.toString()+"px"
 
-    for(let i=0;i<window.m+1;i++){
+    for(let i=0;i<m+1;i++){
         let tr = document.createElement("tr")
         
         tr.id= i.toString();
-        for(let j=0;j<window.n+1;j++){
+        for(let j=0;j<n+1;j++){
             let ele = document.createElement("td")
             ele.style.width = x;
             ele.style.height = x;
@@ -73,13 +73,11 @@ function getRowsCols(event){
                     let a = id.split('/');
                     let x = Number(a[0]);
                     let y = Number(a[1]);
-                    console.log(x)
-                    console.log(y)
 
-                    if(window.si===-1){
+                    if(si===-1){
                         console.log("Hi")
-                        window.si = x;
-                        window.sj = y
+                        si = x;
+                        sj = y
                         let id = x.toString()+"/"+y.toString()
                         let ele = document.getElementById(id)
                         ele.style.backgroundColor = "blue"
@@ -90,9 +88,9 @@ function getRowsCols(event){
                         dg.append(textAnimate1)
                         setTimeout(()=>{textAnimate1.remove()},5100)
                     }
-                    else if(window.ei===-1){
-                        window.ei = x;
-                        window.ej = y
+                    else if(ei===-1){
+                        ei = x;
+                        ej = y
                         let id = x.toString()+"/"+y.toString()
                         let ele = document.getElementById(id)
                         ele.style.backgroundColor = "red"
@@ -107,13 +105,15 @@ function getRowsCols(event){
                         setTimeout(()=>{textAnimate3.remove()},8000)             
                     }
                     else{
-                        if(window.g[x][y]===-1){
-                            window.g[x][y] = window.m*window.n;
+                        
+                        document.getElementById(id).classList.remove('bg-route');
+                        if(g[x][y]===-1){
+                            g[x][y] = m*n;
                             document.getElementById(id).classList.add('bg-white');
                             document.getElementById(id).classList.remove('bg-dark');
                         }
                         else{
-                            window.g[x][y] = -1;
+                            g[x][y] = -1;
                             document.getElementById(id).classList.remove('bg-white');
                             document.getElementById(id).classList.remove('bg-secondary');
                             document.getElementById(id).classList.add('bg-dark')
@@ -125,13 +125,13 @@ function getRowsCols(event){
                     let a = id.split('/');
                     let x = Number(a[0]);
                     let y = Number(a[1]);
-                    for(let i=0;i<window.m+1;i++){
+                    for(let i=0;i<m+1;i++){
                         let ele = document.getElementById(i.toString()+"/"+y.toString());
                         if(ele.classList.contains('bg-white')){
                             ele.classList.add('bg-secondary')
                         }
                     }
-                    for(let i=0;i<window.n+1;i++){
+                    for(let i=0;i<n+1;i++){
                         let ele = document.getElementById(x.toString()+"/"+i.toString());
                         if(ele.classList.contains('bg-white')){
                             ele.classList.add('bg-secondary')
@@ -145,8 +145,8 @@ function getRowsCols(event){
                     let x = Number(a[0]);
                     let y = Number(a[1]);
                 
-                    for(let i=0;i<window.n+1;i++){
-                    for(let i=0;i<window.m+1;i++){
+                    for(let i=0;i<n+1;i++){
+                    for(let i=0;i<m+1;i++){
                         let ele = document.getElementById(i.toString()+"/"+y.toString());
                         if(ele.classList.contains('bg-secondary')){
                         }
@@ -169,40 +169,50 @@ let form = document.getElementById("form1")
 form.addEventListener('submit',getRowsCols)
 
 function findRoute(){
+    for(let i=1;i<=m;i++){
+        for(let j=1;j<=n;j++){
+            let ele = document.getElementById(i.toString()+"/"+j.toString())
+            ele.classList.remove('bg-route')
+            ele.textContent="";
+        }
+    }
+    let g1 = g.map(arr=>[...arr])
     
-    let m = window.m;
-    let n = window.n;
-    let g = window.g;
-    
-    g[window.ei][window.ej]=0
+    g1[ei][ej]=0
+    g1[si][sj]=m*n
     let flag = true;
     while(flag){
         flag = false;
         for(let i=m;i>0;i--){
             for(let j=n;j>0;j--){
-                if(i+1<=m && g[i+1][j]!=-1 && g[i][j]>g[i+1][j]+1){
-                    g[i][j]=g[i+1][j]+1; 
+                if(i+1<=m && g1[i+1][j]!=-1 && g1[i][j]>g1[i+1][j]+1){
+                    g1[i][j]=g1[i+1][j]+1; 
                     flag = true;
                 }
-                if(i-1>=0 && g[i-1][j]!=-1 && g[i][j]>g[i-1][j]+1){
-                    g[i][j]=g[i-1][j]+1;
+                if(i-1>=0 && g1[i-1][j]!=-1 && g1[i][j]>g1[i-1][j]+1){
+                    g1[i][j]=g1[i-1][j]+1;
                     flag = true;
                 }
-                if(j+1<=n && g[i][j+1]!=-1&& g[i][j]>g[i][j+1]+1){
-                    g[i][j]=window.g[i][j+1]+1;
+                if(j+1<=n && g1[i][j+1]!=-1&& g1[i][j]>g1[i][j+1]+1){
+                    g1[i][j]=g1[i][j+1]+1;
                     flag = true;
                     flag=true;
                 }
-                if(j-1>=0 && g[i][j-1]!=-1 && g[i][j]>g[i][j-1]+1){
-                    g[i][j]=g[i][j-1]+1;
+                if(j-1>=0 && g1[i][j-1]!=-1 && g1[i][j]>g1[i][j-1]+1){
+                    g1[i][j]=g1[i][j-1]+1;
                 }
                 
             }
         }
     }
-
-    console.log(g)
-    this.setPath(g,m,n,window.si,window.sj,0)
+    let ele = document.getElementById("displayError")
+    if(g1[si][sj]==m*n){
+        ele.innerHTML='<h3 style="text-align : center;color : red">You cannot reach the end</h3>'
+    }
+    else{
+        ele.innerHTML=''
+    }
+    this.setPath(g1,m,n,si,sj,0)
 }
 
 function setRoute(x,y,c){
@@ -222,7 +232,7 @@ async function setPath(g,m,n,i,j,x){
     setRoute(i,j,x)
     let result = await resolveAfter2Seconds()
     let a = g[i][j]
-    if(i==m && j==n){
+    if(i==ei && j==ej){
         console.log(g)
         return ;
     }
