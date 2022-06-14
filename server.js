@@ -2,7 +2,9 @@ const exp = require("express")
 const app = exp()
 const path = require("path")
 app.use(exp.static(path.join(__dirname,"game")))
-const port = 4000
+
+require("dotenv").config()
+const port = process.env.PORT
 app.listen(port, ()=>{console.log(`App listening on port ${port}`)})
 app.use(exp.json())
 
