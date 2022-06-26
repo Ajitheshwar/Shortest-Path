@@ -7,3 +7,10 @@ Based on the available paths from start to end, all shortest possible paths are 
 
 ## Check below link for the application<br>
 https://possible-shortest-paths-ajith.herokuapp.com/
+
+## Skills I have used
+HTML, CSS, JS
+
+## Algorithm 
+I have used Dynamic Programming and knowledge of Dijkstra Algoithm to find the shortest path.
+Then I have traced the paths.
